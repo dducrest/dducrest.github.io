@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+  </head>
+  <body>    
+    <div id="app">
+      <button id="openButton" type="button" onclick="openSupportWindow()" >Open Hubspot Chatbot</button>
+      <button id="openButton" type="button" onclick="closeSupportWindow()" >Close Hubspot Chatbot</button>
+      <button id="openButton" type="button" onclick="removeSupportWindow()" >Remove Hubspot Chatbot</button>
+      <h1>Problem</h1>
+      <br>
+      <div>The Hubspot chat bot leaves a frame open that block interactions with elements on hosting page, when <Strong>hsConversationsSettings.inlineEmbedSelector</Strong> is assigned.</div>
+      <pre>
+        window.hsConversationsSettings = {
+          loadImmediately: false,
+          inlineEmbedSelector: '#hubspot-conversations',
+          enableWidgetCookieBanner: true,
+          disableAttachment: false
+        };
+      </pre>
+      <h1>Prep</h1>
+      <div>Click "Try to Click this Button" to verify that a modal acknowledging the box appears.</div>
+      <h1>Steps to Reproduce</h1>
+      <div>
+        1) Click "Open Hubspot Chatbot"<br>
+        2) Enter 'any phrase' in the Hubspot Chatbot search box<br>
+        3) Click any link to Knowledge base Article (note: a new tab will open. Return to this page)<br>
+        4) Try to click "Try to Click this Button"
+      </div>
+      <h1>Results</h1>
+      <div>
+        <li>Notice that the Frame border is still visible in the bottom right of this page where the Hubspot Chatbot previously was.</li>      
+        <li>Notice that the Chatbox cannot reopened until the Widget is removed from page using "Remove Hubspot Chatbot"</li>      
+      </div>
+      <dialog id="dialog">
+        <span>Successfully Clicked "Try to Click this Button"</span>
+        <button type="button" onclick="document.getElementById('dialog').close()">Close Me</button>
+      </dialog>
+      <button id="tryButton" type="button" onclick="document.getElementById('dialog').showModal()" >Try to Click this Button</button>
+    </div>
+    <div id="hubspot-conversations" >      
+    </div>
+    
+    <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/20278608.js"></script>
+    <script>
+      
+
+      let open= false;
+
+      function openSupportWindow(){  
+        window.HubSpotConversations.widget.load();
+        window.HubSpotConversations.widget.open();        
+      }
+
+      function closeSupportWindow(){  
+        window.HubSpotConversations.widget.close();        
+      }
+
+      function removeSupportWindow(){  
+        window.HubSpotConversations.widget.remove();        
+      }
+
+
+      window.hsConversationsSettings = {
+        loadImmediately: false,
+        inlineEmbedSelector: '#hubspot-conversations',
+        enableWidgetCookieBanner: true,
+        disableAttachment: false
+      };
+    </script>
+    <style>
+      #hubspot-conversations {
+        display: initial!important;
+        position: fixed!important;
+        bottom: 3.75em!important;
+        right: 0!important;      
+      }
+      
+      #hubspot-conversations-inline-parent {
+        width: 420px;
+        height: 450px;      
+      }
+
+      #hubspot-conversations-inline-iframe {
+        width:100%; 
+        height:100%;
+      } 
+
+      #tryButton{
+        position: fixed!important;
+        bottom: 5em!important;
+        right: 2em!important;   
+      }
+    /style>
+  </body>
+</html>
+
